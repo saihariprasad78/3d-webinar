@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LinkedIn Made Simple | Student Career Catalyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --primary: #005eb5;
+    --primary-dark: #00468a;
+    --ink: #00162c;
+    --body: #43474d;
+    --bg: #f0f4f8;
+    --chip: #d6e3ff;
+    --navy: #102b46;
+    --line: #eaeef2;
+    --border: #c3c6ce;
+    --danger: #ba1a1a;
+    --muted: #7a93b3;
+    --light-blue: #5c9efe;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  body {
+    font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--body);
+    background: #fff;
+    line-height: 1.5;
+    padding-top: 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; }
+  button { font: inherit; cursor: pointer; border: none; background: none; }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .section { padding: 112px 0; }
+  .center { text-align: center; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--primary);
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 9999px;
+    background: var(--chip); color: var(--primary-dark);
+    font-size: 12px; font-weight: 700; letter-spacing: .48px;
+  }
+  h1, h2, h3, h4 { color: var(--ink); font-weight: 800; }
+  h1 { font-size: 48px; line-height: 60px; letter-spacing: -1.2px; }
+  h2 { font-size: 36px; line-height: 44px; letter-spacing: -.72px; font-weight: 700; }
+  h3 { font-size: 20px; line-height: 28px; letter-spacing: -.1px; font-weight: 700; }
+  h4 { font-size: 16px; line-height: 24px; font-weight: 700; }
+  .lead { font-size: 18px; line-height: 28px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 28px; border-radius: 10px;
+    font-size: 16px; font-weight: 600; letter-spacing: .16px;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-secondary { background: #eaeef2; color: var(--ink); box-shadow: none; }
+  .btn-secondary:hover { background: #dfe3e7; }
+  .btn:disabled { opacity: .7; cursor: not-allowed; transform: none; }
+
+  /* ---------- HEADER ---------- */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 80px; z-index: 100;
+    background: rgba(246,250,254,.85);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 8px rgba(16,43,70,.04);
+  }
+  .header-inner {
+    height: 80px; max-width: 1280px; margin: 0 auto; padding: 0 32px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 40px; height: 40px; border-radius: 12px; background: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px -2px rgba(16,43,70,.15);
+  }
+  .brand-name { font-size: 20px; font-weight: 700; letter-spacing: -.5px; color: var(--ink); line-height: 20px; }
+  .brand-sub { font-size: 12px; font-weight: 600; letter-spacing: .6px; text-transform: uppercase; color: var(--primary); margin-top: 2px; }
+  .nav { display: flex; gap: 8px; }
+  .nav a {
+    padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 600;
+    letter-spacing: .21px; color: var(--body); transition: background .15s;
+  }
+  .nav a:hover { background: rgba(0,94,181,.08); color: var(--primary); }
+  .header-cta { display: flex; align-items: center; gap: 16px; }
+  .header-cta .btn { height: 44px; padding: 11px 20px; font-size: 14px; letter-spacing: .21px; box-shadow: 0 2px 8px -2px rgba(16,43,70,.1); }
+  .avatar-dot {
+    width: 32px; height: 32px; border-radius: 9999px; background: var(--ink);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: 96px 0;
+    background: linear-gradient(180deg, #fff 0%, #f6fafe 50%, #f0f4f8 100%);
+  }
+  .blob { position: absolute; border-radius: 9999px; filter: blur(32px); pointer-events: none; }
+  .blob-1 { width: 384px; height: 384px; top: -160px; right: -160px; background: rgba(168,200,255,.3); }
+  .blob-2 { width: 320px; height: 320px; left: -128px; top: 60%; background: rgba(198,231,255,.2); }
+  .hero-grid {
+    position: relative; display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center;
+  }
+  .hero-left { display: flex; flex-direction: column; align-items: flex-start; }
+  .hero-left .chip { margin-bottom: 24px; box-shadow: 0 1px 1px rgba(0,0,0,.05); }
+  .hero h1 { margin-bottom: 16px; }
+  .hero h1 span { color: var(--primary); display: block; }
+  .hero .tagline { font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -.24px; color: var(--ink); margin-bottom: 16px; }
+  .hero .desc { max-width: 576px; font-size: 18px; line-height: 29.25px; margin-bottom: 40px; }
+  .btn-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 24px; }
+  .micro { display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 22px; }
+
+  .profile-wrap { position: relative; width: 100%; max-width: 448px; justify-self: end; }
+  .profile-glow {
+    position: absolute; inset: -4px -4px -4px -4px; border-radius: 16px; filter: blur(8px);
+    background: linear-gradient(51deg, rgba(0,94,181,.2) 0%, rgba(92,158,254,.3) 100%);
+  }
+  .profile-card {
+    position: relative; background: #fff; border-radius: 16px; padding: 24px;
+    display: flex; flex-direction: column; gap: 20px;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1);
+  }
+  .profile-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .profile-id { display: flex; gap: 14px; align-items: flex-start; }
+  .avatar {
+    width: 64px; height: 64px; border-radius: 9999px; background: var(--navy); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700;
+    position: relative; flex-shrink: 0;
+  }
+  .avatar::after {
+    content: ""; position: absolute; right: 0; bottom: 0; width: 16px; height: 16px; border-radius: 9999px;
+    background: var(--primary); box-shadow: 0 0 0 2px #fff;
+  }
+  .profile-name { display: flex; align-items: center; gap: 6px; }
+  .profile-name .role { font-size: 14px; font-weight: 600; color: var(--primary); letter-spacing: .21px; }
+  .profile-name .school { font-size: 12px; font-weight: 700; color: var(--body); letter-spacing: .48px; line-height: 16px; }
+  .status-pill {
+    background: var(--line); color: var(--body); padding: 4px 10px 4px 10px; border-radius: 9999px;
+    font-size: 12px; font-weight: 700; letter-spacing: .48px; line-height: 16px; text-align: left;
+  }
+  .pitch { background: var(--bg); padding: 14px; border-radius: 12px; font-size: 14px; line-height: 19.25px; color: var(--ink); }
+  .label-cap { font-size: 12px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--body); margin-bottom: 8px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; letter-spacing: .48px; background: var(--chip); color: var(--primary-dark); }
+  .tag.muted { background: var(--line); color: var(--body); }
+  .projects { display: flex; flex-direction: column; gap: 8px; }
+  .project {
+    background: #f6fafe; border-radius: 12px; padding: 12px;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  }
+  .project-l { display: flex; gap: 10px; align-items: center; }
+  .project-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--navy); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .project-icon.blue { background: var(--primary); }
+  .project-title { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 20px; }
+  .project-meta { font-size: 12px; font-weight: 700; color: var(--body); letter-spacing: .48px; line-height: 16px; }
+  .project-link { font-size: 12px; font-weight: 600; color: var(--primary); letter-spacing: .48px; display: flex; gap: 4px; align-items: center; white-space: nowrap; }
+  .network { background: #e4e9ed; padding: 12px; border-radius: 12px; display: flex; gap: 12px; align-items: center; }
+  .network-icon { width: 36px; height: 36px; border-radius: 9999px; background: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .network .t1 { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 20px; }
+  .network .t2 { font-size: 12px; font-weight: 700; color: var(--body); letter-spacing: .48px; line-height: 16px; }
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust { background: var(--line); padding: 24px 32px; }
+  .trust-inner { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
+  .trust-item { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; letter-spacing: .21px; color: var(--ink); }
+
+  /* ---------- PROBLEM / SOLUTION ---------- */
+  .intro { max-width: 768px; margin: 0 auto 64px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .intro .lead-sm { font-size: 18px; line-height: 29.25px; }
+  .pill-blue {
+    margin-top: 8px; background: var(--chip); color: var(--primary-dark);
+    padding: 10px 20px; border-radius: 9999px; font-size: 16px; font-weight: 700; letter-spacing: .16px;
+  }
+  .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .pillar {
+    background: var(--bg); border-radius: 16px; padding: 32px;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  }
+  .icon-box {
+    width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    color: #fff; flex-shrink: 0;
+  }
+  .pillar h3 { margin: 12px 0 12px; }
+  .pillar p { font-size: 16px; line-height: 26px; }
+  .pillar .more { margin-top: 24px; font-size: 14px; font-weight: 600; letter-spacing: .21px; color: var(--primary); display: inline-flex; align-items: center; gap: 8px; }
+  .pillar .more.ink { color: var(--ink); }
+
+  /* ---------- ACHIEVEMENTS ---------- */
+  .achv { background: var(--bg); }
+  .achv-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 64px; flex-wrap: wrap; }
+  .achv-top .sub { font-size: 18px; line-height: 28px; max-width: 672px; margin-top: 8px; }
+  .pill-white {
+    background: #fff; padding: 8px 16px; border-radius: 12px; display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 700; letter-spacing: .21px; color: var(--primary); box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  }
+  .editable-tag {
+    display: inline-flex; gap: 8px; align-items: center; background: #dfe3e7; color: var(--body);
+    padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; letter-spacing: .48px;
+  }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px; }
+  .stat { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 1px rgba(0,0,0,.05); }
+  .stat .kicker { font-size: 12px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+  .stat .num { font-size: 48px; line-height: 56px; font-weight: 800; letter-spacing: -1.44px; color: var(--ink); margin-bottom: 4px; }
+  .stat h4 { font-size: 20px; line-height: 28px; letter-spacing: -.1px; margin-bottom: 8px; font-weight: 700; }
+  .stat p { font-size: 16px; line-height: 26px; }
+  .roadmap-title { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+  .roadmap-title h3 { font-size: 20px; }
+  .milestones { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .milestone { background: #fff; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 22px; box-shadow: 0 1px 1px rgba(0,0,0,.05); }
+  .ms-num {
+    width: 40px; height: 40px; border-radius: 8px; background: var(--line); color: var(--primary);
+    display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; margin-bottom: 8px;
+  }
+  .milestone h4 { padding-top: 8px; }
+  .ph-box { background: var(--bg); padding: 12px; border-radius: 8px; font-family: 'Liberation Mono', 'Courier New', monospace; font-size: 14px; line-height: 22px; color: var(--body); margin-top: 8px; }
+  .ms-foot { padding-top: 16px; font-size: 12px; font-weight: 600; letter-spacing: .48px; color: var(--primary); }
+
+  /* ---------- BENEFITS ---------- */
+  .benefits-intro { max-width: 768px; margin: 0 auto 64px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .benefits-intro p { font-size: 18px; line-height: 28px; padding-top: 4px; }
+  .benefit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .benefit { background: var(--bg); border-radius: 16px; padding: 32px; display: flex; gap: 20px; align-items: flex-start; }
+  .benefit .icon-sm { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+  .benefit h3 { margin-bottom: 8px; }
+  .benefit p { font-size: 16px; line-height: 26px; }
+
+  /* ---------- REGISTRATION + PAYMENT ---------- */
+  .register { background: rgba(228,233,237,.4); }
+  .register-head { max-width: 768px; margin: 0 auto 64px; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+  .register-head h2 { font-size: 36px; }
+  .register-head p { font-size: 18px; line-height: 28px; }
+  .register-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: start; }
+
+  .form-card {
+    position: relative; background: #fff; border-radius: 16px; padding: 40px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .form-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 17px; border-bottom: 1px solid var(--line); }
+  .form-head h3 { font-size: 20px; }
+  .form-head p { font-size: 14px; line-height: 22px; }
+  .step { background: var(--line); color: var(--primary); padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 700; letter-spacing: .48px; white-space: nowrap; }
+  .form { display: flex; flex-direction: column; gap: 24px; }
+  .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .field label { font-size: 14px; font-weight: 700; letter-spacing: .21px; color: var(--ink); }
+  .field label .req { color: var(--danger); }
+  .field input {
+    height: 44px; width: 100%; padding: 11px 17px; border-radius: 8px;
+    border: 1px solid var(--border); background: #fff; color: var(--ink);
+    font: inherit; font-size: 16px; box-shadow: 0 1px 2px rgba(0,0,0,.05); outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .field input::placeholder { color: #9ca3af; }
+  .field input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,94,181,.15); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .submit-btn { width: 100%; height: 48px; padding: 0 16px; background: var(--primary); color: #fff; border-radius: 10px; font-size: 16px; font-weight: 600; letter-spacing: .16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1); display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .submit-btn:hover:not(:disabled) { background: var(--primary-dark); }
+  .privacy { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; line-height: 22px; text-align: center; }
+  .status-msg { font-size: 14px; line-height: 22px; text-align: center; min-height: 0; }
+  .status-msg.error { color: var(--danger); }
+  .success-panel { display: none; flex-direction: column; align-items: center; gap: 16px; text-align: center; padding: 24px 8px; }
+  .success-panel.show { display: flex; }
+  .success-panel h3 { font-size: 24px; }
+  .success-panel p { font-size: 16px; line-height: 26px; max-width: 420px; }
+  .success-icon { width: 64px; height: 64px; border-radius: 9999px; background: var(--chip); color: var(--primary); display: flex; align-items: center; justify-content: center; }
+
+  .pay-card {
+    position: relative; overflow: hidden; background: var(--ink); color: #fff;
+    border-radius: 16px; padding: 40px;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1);
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .pay-card::after {
+    content: ""; position: absolute; right: -80px; bottom: -80px; width: 240px; height: 240px; border-radius: 9999px;
+    background: rgba(0,94,181,.2); filter: blur(20px); pointer-events: none;
+  }
+  .pay-badge { align-self: flex-start; background: var(--navy); color: #d2e4ff; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 700; letter-spacing: .48px; display: inline-flex; align-items: center; gap: 8px; }
+  .pay-card h3 { color: #fff; font-size: 24px; line-height: 32px; letter-spacing: -.24px; }
+  .pay-card .pay-desc { color: var(--muted); font-size: 16px; line-height: 26px; }
+  .price-box { background: var(--navy); border-radius: 12px; padding: 20px; position: relative; height: 115px; display: flex; flex-direction: column; justify-content: center; }
+  .price-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .price-big { font-size: 48px; font-weight: 800; letter-spacing: -1.44px; line-height: 48px; }
+  .price-sub { font-size: 16px; color: var(--muted); }
+  .price-right { text-align: right; }
+  .price-old { font-size: 16px; color: var(--muted); text-decoration: line-through; }
+  .price-tag { font-size: 12px; font-weight: 700; color: var(--light-blue); letter-spacing: .48px; margin-top: 4px; }
+  .includes-label { font-size: 12px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+  .includes { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+  .includes li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 22px; color: #dfe3e7; }
+  .includes li svg { flex-shrink: 0; margin-top: 2px; }
+  .pay-cta-wrap { border-top: 1px solid var(--navy); padding-top: 17px; display: flex; flex-direction: column; gap: 12px; }
+  .pay-btn {
+    width: 100%; height: 48px; border-radius: 10px; background: var(--light-blue); color: #00356b;
+    font-size: 16px; font-weight: 700; letter-spacing: .16px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px -1px rgba(0,0,0,.1);
+  }
+  .pay-btn:hover { filter: brightness(1.05); }
+  .secure { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .48px; text-align: center; }
+  .pay-note { text-align: center; font-size: 12px; font-style: italic; color: rgba(122,147,179,.8); }
+
+  /* ---------- REVIEWS ---------- */
+  .reviews-head { max-width: 768px; margin: 0 auto 64px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .reviews-head p { font-size: 18px; line-height: 28px; }
+  .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .review {
+    background: var(--bg); border-radius: 16px; padding: 32px;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  }
+  .stars { display: flex; gap: 4px; color: var(--primary); }
+  .review blockquote { font-size: 16px; line-height: 26px; color: var(--ink); }
+  .review-foot { border-top: 1px solid var(--line); padding-top: 17px; display: flex; align-items: center; gap: 12px; }
+  .initials {
+    width: 40px; height: 40px; border-radius: 9999px; background: var(--chip); color: var(--primary-dark);
+    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0;
+  }
+  .review-name { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: .21px; line-height: 20px; }
+  .review-deg { font-size: 12px; font-weight: 700; color: var(--body); letter-spacing: .48px; line-height: 16px; }
+
+  /* ---------- FAQ ---------- */
+  .faq { background: var(--bg); }
+  .faq-wrap { max-width: 896px; margin: 0 auto; padding: 0 32px; }
+  .faq-head { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; margin-bottom: 64px; }
+  .faq-head p { font-size: 18px; line-height: 28px; padding-top: 4px; }
+  .faq-list { display: flex; flex-direction: column; gap: 16px; }
+  .faq-item { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+  .faq-q {
+    width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 24px; text-align: left; color: var(--ink); font-size: 20px; font-weight: 700; letter-spacing: -.1px; line-height: 28px;
+  }
+  .faq-q svg { transition: transform .2s ease; flex-shrink: 0; }
+  .faq-item.open .faq-q svg { transform: rotate(180deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .25s ease; }
+  .faq-a p { padding: 0 24px 24px; font-size: 16px; line-height: 26px; }
+  .faq-item.open .faq-a { max-height: 300px; }
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta {
+    position: relative; overflow: hidden; background: var(--ink); color: #fff;
+    padding: 112px 32px; text-align: center;
+  }
+  .final-cta::before {
+    content: ""; position: absolute; inset: 0; opacity: .6;
+    background: linear-gradient(90deg, #00162c 0%, #102b46 50%, #00162c 100%);
+  }
+  .final-glow {
+    position: absolute; left: 50%; top: 50%; width: 600px; height: 600px; transform: translate(-50%, -50%);
+    border-radius: 9999px; background: rgba(0,94,181,.15); filter: blur(32px); pointer-events: none;
+  }
+  .final-inner { position: relative; max-width: 1024px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .final-inner .chip { background: var(--navy); color: var(--light-blue); padding: 6px 16px; font-size: 14px; letter-spacing: .21px; margin-bottom: 16px; }
+  .final-inner h2 { color: #fff; font-size: 48px; line-height: 60px; letter-spacing: -1.2px; font-weight: 800; }
+  .final-inner .sub1 { font-size: 24px; line-height: 32px; color: var(--muted); letter-spacing: -.24px; padding-top: 8px; }
+  .final-inner .sub2 { font-size: 20px; line-height: 28px; font-weight: 700; color: #d6e3ff; letter-spacing: .5px; }
+  .final-inner .btn { margin-top: 32px; padding: 16px 32px; box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1); }
+  .final-perks { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-top: 24px; }
+  .final-perks span { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; letter-spacing: .21px; color: var(--muted); }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer { background: #fff; box-shadow: 0 -1px 4px rgba(16,43,70,.03); padding: 64px 0 40px; }
+  .footer-grid { display: grid; grid-template-columns: 5fr 3fr 4fr; gap: 48px; padding-bottom: 48px; }
+  .footer-brand p { font-size: 16px; line-height: 26px; max-width: 384px; margin: 16px 0 24px; }
+  .footer-col h3 { font-size: 16px; letter-spacing: .16px; margin-bottom: 12px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col a { font-size: 14px; line-height: 22px; letter-spacing: .07px; }
+  .footer-col a:hover { color: var(--primary); }
+  .hotline-label { font-size: 12px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--body); margin-top: 16px; margin-bottom: 4px; }
+  .hotline-mail { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--primary) !important; }
+  .disclaimer { background: rgba(240,244,248,.6); border-radius: 12px; padding: 24px 20px; font-size: 14px; line-height: 22.75px; color: var(--body); }
+  .disclaimer strong { color: #171c1f; font-weight: 700; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 56px; font-size: 14px; letter-spacing: .07px; }
+  .footer-bottom .verified { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .48px; color: var(--body); }
+  .footer-bottom .dot { width: 8px; height: 8px; border-radius: 9999px; background: var(--primary); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1100px) {
+    .nav { display: none; }
+  }
+  @media (max-width: 960px) {
+    .hero-grid, .register-grid { grid-template-columns: 1fr; }
+    .profile-wrap { justify-self: center; }
+    .cards-3, .reviews, .stats { grid-template-columns: 1fr; }
+    .milestones { grid-template-columns: repeat(2, 1fr); }
+    .benefit-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .section { padding: 80px 0; }
+    h1 { font-size: 40px; line-height: 50px; }
+    h2 { font-size: 30px; line-height: 38px; }
+    .final-inner h2 { font-size: 36px; line-height: 44px; }
+    .faq-wrap { padding: 0 20px; }
+    .container { padding: 0 20px; }
+    .header-inner { padding: 0 20px; }
+  }
+  @media (max-width: 600px) {
+    .header-cta .btn-ghost-hide { display: none; }
+    .brand-sub { display: none; }
+    .hero { padding: 56px 0; }
+    .milestones { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .form-card, .pay-card { padding: 24px; }
+    .faq-q { font-size: 17px; padding: 18px; }
+    .faq-a p { padding: 0 18px 18px; }
+    .final-cta { padding: 80px 20px; }
+    .final-inner h2 { font-size: 30px; line-height: 38px; }
+    .final-inner .sub1 { font-size: 18px; line-height: 26px; }
+    .price-big { font-size: 40px; }
+    .trust-inner { gap: 20px; }
+    .benefit { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">
+        <svg width="15" height="19" viewBox="0 0 15 19" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7" r="5"/><path d="M4.5 11.5 3 18l4.5-2 4.5 2-1.5-6.5"/></svg>
+      </span>
+      <span>
+        <span class="brand-name" style="display:block">LinkedIn Made Simple</span>
+        <span class="brand-sub" style="display:block">Student Career Catalyst</span>
+      </span>
+    </a>
+
+    <nav class="nav">
+      <a href="#benefits">Benefits</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQs</a>
+    </nav>
+
+    <div class="header-cta">
+      <a class="btn btn-primary" href="https://payments.cashfree.com/forms/getaudit" target="_blank" rel="noopener">Get Started — ₹1</a>
+      <span class="avatar-dot btn-ghost-hide" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      </span>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <span class="chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00468a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          Made for students, built for your next step
+        </span>
+        <h1>Your Skills Are Real.<span>Let the World See Them.</span></h1>
+        <p class="tagline">Build your profile. Share your story. Open new doors.</p>
+        <p class="desc">You don't need years of experience to get noticed. You just need the right start, a little guidance, and a profile that speaks for you.</p>
+
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#register">
+            Start Your LinkedIn Journey
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-secondary" href="#achievements">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="#005eb5"/></svg>
+            See How It Works
+          </a>
+        </div>
+        <p class="micro">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#43474d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+          No credit card required for consultation &bull; Takes under 5 mins to sign up
+        </p>
+      </div>
+
+      <div class="profile-wrap">
+        <div class="profile-glow"></div>
+        <div class="profile-card">
+          <div class="profile-head">
+            <div class="profile-id">
+              <div class="avatar">AP<span></span></div>
+              <div>
+                <div class="profile-name">
+                  <span class="chip-name" style="font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.1px;line-height:28px">Aarav Patel</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 2.1 3.2-.2.9 3.1 2.6 1.9-1.1 3 1.1 3-2.6 1.9-.9 3.1-3.2-.2L12 22l-2.4-2.1-3.2.2-.9-3.1-2.6-1.9 1.1-3-1.1-3 2.6-1.9.9-3.1 3.2.2z"/><path d="M8.5 12l2.5 2.5 4.5-4.5"/></svg>
+                </div>
+                <div class="school" style="font-size:14px;color:var(--primary);font-weight:600;letter-spacing:.21px;text-transform:none">3rd Year B.Tech CSE</div>
+                <div class="school">Indian Institute of Information Tech</div>
+              </div>
+            </div>
+            <div class="status-pill">Active<br>Learner</div>
+          </div>
+
+          <div class="pitch">"Building scalable web apps &amp; exploring AI | Open Source Contributor | College Hackathon Finalist"</div>
+
+          <div>
+            <div class="label-cap">Validated Competencies</div>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">React</span>
+              <span class="tag">System Design</span>
+              <span class="tag muted">Technical Writing</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="label-cap">Showcased Projects</div>
+            <div class="projects">
+              <div class="project">
+                <div class="project-l">
+                  <span class="project-icon">
+                    <svg width="15" height="12" viewBox="0 0 24 20" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="2" width="20" height="16" rx="2"/><path d="M6 8l3 2.5L6 13"/></svg>
+                  </span>
+                  <div>
+                    <div class="project-title">CampusEvent Finder</div>
+                    <div class="project-meta">React + Node &bull; 850+ active campus users</div>
+                  </div>
+                </div>
+                <span class="project-link">GitHub
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>
+                </span>
+              </div>
+              <div class="project">
+                <div class="project-l">
+                  <span class="project-icon blue">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                  </span>
+                  <div>
+                    <div class="project-title">Smart Attendance System</div>
+                    <div class="project-meta">Computer Vision &bull; 98.4% facial accuracy</div>
+                  </div>
+                </div>
+                <span class="project-link">Demo
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="network">
+            <span class="network-icon">
+              <svg width="20" height="10" viewBox="0 0 24 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="4" r="3"/><circle cx="17" cy="5" r="2.2"/><path d="M1 12c0-3 3-4.5 7-4.5S15 9 15 12M16 12c0-1.5 1.5-2.5 4-2.5"/></svg>
+            </span>
+            <div>
+              <div class="t1">Connected with 140+ alumni and industry mentors</div>
+              <div class="t2">Average reply rate: 42% via tailored frameworks</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust">
+  <div class="trust-inner">
+    <span class="trust-item">
+      <svg width="20" height="17" viewBox="0 0 24 20" fill="none" stroke="#00162c" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2 1 7l11 5 9-4.1V14"/><path d="M5 9.5V14c0 1.7 3 3 7 3s7-1.3 7-3V9.5"/></svg>
+      For beginners
+    </span>
+    <span class="trust-item">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l-2 3 2 3M15 9l2 3-2 3"/></svg>
+      College projects
+    </span>
+    <span class="trust-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+      Personal branding
+    </span>
+    <span class="trust-item">
+      <svg width="22" height="21" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="6" r="2.5"/><circle cx="5" cy="17" r="2.5"/><circle cx="19" cy="17" r="2.5"/><path d="M12 8.5v3.5M12 12l-5 3M12 12l5 3"/></svg>
+      Professional networking
+    </span>
+  </div>
+</section>
+
+<!-- ============ PROBLEM / SOLUTION ============ -->
+<section class="section" style="background:#fff">
+  <div class="container">
+    <div class="intro">
+      <div class="eyebrow">Rethinking LinkedIn for students</div>
+      <h2>A Profile That Works, Even Before Your First Job</h2>
+      <p class="lead-sm">College life is full of learning, projects, and dreams. But when it comes to LinkedIn, many students are left wondering: What should I write? What should I post? How do I even begin?</p>
+      <span class="pill-blue">No experience? No perfect profile? No problem.</span>
+    </div>
+
+    <div class="cards-3">
+      <div class="pillar">
+        <div>
+          <span class="icon-box" style="background:var(--primary)">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17c.7-1.8 2.2-2.8 4-2.8s3.3 1 4 2.8"/></svg>
+          </span>
+          <h3>Build Your Profile</h3>
+          <p>Transform class projects, college societies, and self-taught skills into polished, recruiter-friendly sections that command attention.</p>
+        </div>
+        <a class="more" href="#benefits">Learn profile optimization
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="pillar">
+        <div>
+          <span class="icon-box" style="background:var(--navy)">
+            <svg width="23" height="19" viewBox="0 0 24 20" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M2 5h8l2 2h10v11H2z"/><path d="M12 9l1 2 2 .3-1.5 1.4.4 2.1L12 14l-1.9 1 .4-2.1L9 11.3l2-.3z" fill="#fff" stroke="none"/></svg>
+          </span>
+          <h3>Showcase Your Work</h3>
+          <p>Frame GitHub repos, case studies, academic papers, and coursework so visitors immediately grasp your practical capabilities.</p>
+        </div>
+        <a class="more ink" href="#benefits">Frame technical work
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00162c" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="pillar">
+        <div>
+          <span class="icon-box" style="background:var(--light-blue)">
+            <svg width="23" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h4v3a2 2 0 1 0 4 0V6h3v4h-2a2 2 0 1 0 0 4h2v7h-7v-2a2 2 0 1 0-4 0v2H3v-7h2a2 2 0 1 0 0-4H3V6h7z"/></svg>
+          </span>
+          <h3>Connect With Confidence</h3>
+          <p>Reach out to alumni, founders, and recruiters with genuine, non-awkward message frameworks that actually spark conversations.</p>
+        </div>
+        <a class="more" href="#benefits">Explore outreach scripts
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACHIEVEMENTS ============ -->
+<section class="section achv" id="achievements">
+  <div class="container">
+    <div class="achv-top">
+      <div>
+        <span class="editable-tag">
+          <svg width="12" height="11" viewBox="0 0 24 20" fill="none" stroke="#43474d" stroke-width="2" stroke-linecap="round"><path d="M3 5h12M3 10h8M3 15h10"/></svg>
+          Editable metrics — replace with verified program results
+        </span>
+        <h2 style="margin-top:8px">Not Just Dreams. Real Steps Forward.</h2>
+        <p class="sub">Every achievement starts somewhere. Share the milestones that make your journey worth following.</p>
+      </div>
+      <span class="pill-white">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        Cohort Verification Enabled
+      </span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="kicker">Milestones Reached</div>
+        <div class="num">[X]+</div>
+        <h4>Achievements</h4>
+        <p>Milestones unlocked across student cohorts with structured guidance.</p>
+      </div>
+      <div class="stat">
+        <div class="kicker">Community Reach</div>
+        <div class="num">[X]+</div>
+        <h4>Students Helped</h4>
+        <p>Guided through hands-on profile transformations and career alignment.</p>
+      </div>
+      <div class="stat">
+        <div class="kicker">Portfolios Curated</div>
+        <div class="num">[X]</div>
+        <h4>Projects</h4>
+        <p>Portfolio projects successfully highlighted to prospective hiring managers.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="roadmap-title">
+        <svg width="20" height="15" viewBox="0 0 24 18" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l2 2 3-3M2 12l2 2 3-3M11 4h11M11 12h11"/></svg>
+        <h3>Sample Student Milestones Roadmap</h3>
+      </div>
+      <div class="milestones">
+        <div class="milestone">
+          <div>
+            <div class="ms-num">01</div>
+            <h4>Certifications &amp; Coursework</h4>
+            <div class="ph-box">[Sample Certification: Cloud Practitioner / Full Stack Web]</div>
+          </div>
+          <div class="ms-foot">Structured Audit Ready</div>
+        </div>
+        <div class="milestone">
+          <div>
+            <div class="ms-num">02</div>
+            <h4>Internships &amp; Apprenticeships</h4>
+            <div class="ph-box">[Sample Experience: Summer Research Intern / Startup Fellow]</div>
+          </div>
+          <div class="ms-foot">Narrative Framing Ready</div>
+        </div>
+        <div class="milestone">
+          <div>
+            <div class="ms-num">03</div>
+            <h4>Capstone Projects &amp; Hackathons</h4>
+            <div class="ph-box">[Sample Milestone: Inter-College Hackathon Runner-up]</div>
+          </div>
+          <div class="ms-foot">Outcome Metrics Ready</div>
+        </div>
+        <div class="milestone">
+          <div>
+            <div class="ms-num">04</div>
+            <h4>Campus Leadership &amp; Volunteering</h4>
+            <div class="ph-box">[Sample Role: Tech Club Lead / Event Coordinator]</div>
+          </div>
+          <div class="ms-foot">Soft Skill Alignment Ready</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENEFITS ============ -->
+<section class="section" id="benefits" style="background:#fff">
+  <div class="container">
+    <div class="benefits-intro">
+      <div class="eyebrow">Concrete advantages</div>
+      <h2>From “Where Do I Start?” to “Look How Far I've Come!”</h2>
+      <p>No jargon. No generic advice. Just actionable steps designed specifically for college students and recent grads.</p>
+    </div>
+
+    <div class="benefit-grid">
+      <div class="benefit">
+        <span class="icon-sm" style="background:var(--primary)">
+          <svg width="18" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M9 4V2.5h6V4M8 13l3 3 5-6"/></svg>
+        </span>
+        <div>
+          <h3>Profile-Building Guidance</h3>
+          <p>Step-by-step audit of your headline, summary, and experience to banish blank-page syndrome and reflect your authentic strengths.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <span class="icon-sm" style="background:var(--navy)">
+          <svg width="20" height="14" viewBox="0 0 24 16" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><rect x="2" y="2" width="20" height="12" rx="1.5"/><path d="M6 14h12"/></svg>
+        </span>
+        <div>
+          <h3>Showcase Your Work</h3>
+          <p>Turn raw college assignments into standout visual case studies with impactful outcome summaries that recruiters understand immediately.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <span class="icon-sm" style="background:var(--light-blue)">
+          <svg width="22" height="20" viewBox="0 0 24 22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12l5 5 9-9M22 12l-5 5-9-9"/></svg>
+        </span>
+        <div>
+          <h3>Learn to Connect</h3>
+          <p>Master warm alumni introductions and personalized outreach templates that open doors without feeling awkward or salesy.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <span class="icon-sm" style="background:#48607e">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4z"/></svg>
+        </span>
+        <div>
+          <h3>Post With Confidence</h3>
+          <p>Overcome hesitation with proven student content hooks, project breakdowns, and learning-in-public ideas that build industry authority.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REGISTRATION + ₹1 PAYMENT ============ -->
+<section class="section register" id="register">
+  <div class="container">
+    <div class="register-head">
+      <span class="chip">
+        <svg width="12" height="15" viewBox="0 0 24 24" fill="none" stroke="#00468a" stroke-width="2.2" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>
+        Fast Track 1-on-1 Student Onboarding
+      </span>
+      <h2>Your Next Opportunity Could Start With One Click.</h2>
+      <p>Enter your details to get started. Your journey deserves a proper introduction.</p>
+    </div>
+
+    <div class="register-grid">
+      <!-- Form card: only Name, Email, Phone kept -->
+      <div class="form-card">
+        <div class="form-head">
+          <div>
+            <h3>Student Intake Form</h3>
+            <p>Personalized audit &amp; guidance dispatch</p>
+          </div>
+          <span class="step">Step 1 of 2</span>
+        </div>
+
+        <form class="form" id="intakeForm" novalidate>
+          <div class="field">
+            <label for="name">Full Name <span class="req">*</span></label>
+            <input id="name" name="name" type="text" placeholder="e.g., Ananya Sharma" autocomplete="name" required />
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="email">Email Address <span class="req">*</span></label>
+              <input id="email" name="email" type="email" placeholder="e.g., ananya.sharma@college.edu" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="phone">Phone Number <span class="req">*</span></label>
+              <input id="phone" name="phone" type="tel" placeholder="e.g., +91 98765 43210" autocomplete="tel" required />
+            </div>
+          </div>
+
+          <p class="status-msg error" id="formError" hidden>Please fill in your name, email, and phone number.</p>
+
+          <button class="submit-btn" id="submitBtn" type="submit">
+            <span id="submitText">Continue to Payment (₹1)</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+
+          <p class="privacy">
+            <svg width="12" height="16" viewBox="0 0 24 24" fill="none" stroke="#43474d" stroke-width="2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            We respect your privacy. No spam, ever. Your data is used exclusively to facilitate your 1-on-1 guidance.
+          </p>
+        </form>
+
+        <div class="success-panel" id="successPanel">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#005eb5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>
+          </div>
+          <h3>Your details are saved</h3>
+          <p>Thanks! Complete your ₹1 registration to get started on your audit.</p>
+          <a class="btn btn-primary" href="https://payments.cashfree.com/forms/getaudit" target="_blank" rel="noopener">Pay ₹1 &amp; Continue</a>
+        </div>
+      </div>
+
+      <!-- ₹1 payment card -->
+      <aside class="pay-card">
+        <span class="pay-badge">
+          <svg width="13" height="11" viewBox="0 0 24 20" fill="none" stroke="#d2e4ff" stroke-width="2" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M2 9h20"/></svg>
+          99% Student Subsidy Program
+        </span>
+        <div>
+          <h3>One Rupee. One Start. More Possibilities.</h3>
+          <p class="pay-desc" style="margin-top:8px">Big journeys don't always begin with big money. Take the first step towards a stronger LinkedIn presence without making your wallet nervous.</p>
+        </div>
+
+        <div class="price-box">
+          <div class="price-row">
+            <div style="display:flex;align-items:baseline;gap:12px">
+              <span class="price-big">₹1</span>
+              <span class="price-sub">all-inclusive</span>
+            </div>
+            <div class="price-right">
+              <div class="price-old">Standard Fee ₹499</div>
+              <div class="price-tag">100% Student Accessible</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="includes-label">Included in your ₹1 registration:</div>
+          <ul class="includes">
+            <li>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5c9efe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+              Complete student profile audit checklist (PDF)
+            </li>
+            <li>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5c9efe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+              15+ plug-and-play connection request templates for college students
+            </li>
+            <li>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5c9efe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+              Actionable 5-day step-by-step LinkedIn momentum guide
+            </li>
+          </ul>
+        </div>
+
+        <div class="pay-cta-wrap">
+          <a class="pay-btn" href="https://payments.cashfree.com/forms/getaudit" target="_blank" rel="noopener">
+            <svg width="16" height="15" viewBox="0 0 24 22" fill="none" stroke="#00356b" stroke-width="2" stroke-linejoin="round"><rect x="2" y="4" width="20" height="15" rx="2"/><path d="M2 9h20"/></svg>
+            Pay ₹1 &amp; Continue
+          </a>
+          <p class="secure">
+            <svg width="11" height="14" viewBox="0 0 24 24" fill="none" stroke="#7a93b3" stroke-width="2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            Secure 256-bit encrypted checkout (UPI, Cards, NetBanking)
+          </p>
+          <p class="pay-note">* Payment gateway placeholder pending live API keys integration</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section class="section" id="reviews" style="background:#fff">
+  <div class="container">
+    <div class="reviews-head">
+      <span class="editable-tag" style="background:#e4e9ed">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#43474d" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v.5M12 11v5"/></svg>
+        Editable student review placeholders — update with authentic testimonials upon review collection
+      </span>
+      <h2>Real Voices. Real Progress.</h2>
+      <p>Your journey matters. So do the people who grow with you.</p>
+    </div>
+
+    <div class="reviews">
+      <div class="review">
+        <div>
+          <div class="stars" aria-label="5 stars">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+          </div>
+          <blockquote style="margin-top:16px">"[Student Review Quote Placeholder: 'I used to think LinkedIn was only for experienced managers. Within two weeks of restructuring my projects, alumni started replying to my messages!']"</blockquote>
+        </div>
+        <div class="review-foot">
+          <span class="initials">RV</span>
+          <div>
+            <div class="review-name">[Student Name Placeholder: R. Verma]</div>
+            <div class="review-deg">[Degree Placeholder: BCA Graduate, Class of 2024]</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review">
+        <div>
+          <div class="stars" aria-label="5 stars">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+          </div>
+          <blockquote style="margin-top:16px">"[Student Review Quote Placeholder: 'The headline and project breakdown templates made my profile look 10x more professional without feeling fake.']"</blockquote>
+        </div>
+        <div class="review-foot">
+          <span class="initials" style="background:#d2e4ff;color:#001d36">PK</span>
+          <div>
+            <div class="review-name">[Student Name Placeholder: P. Kulkarni]</div>
+            <div class="review-deg">[Degree Placeholder: Electronics &amp; Comm., 4th Year]</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review">
+        <div>
+          <div class="stars" aria-label="5 stars">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7-6.3-3.8L5.7 21l1.7-7L2 9.5l7.1-.6z"/></svg>
+          </div>
+          <blockquote style="margin-top:16px">"[Student Review Quote Placeholder: 'Super approachable and clear. The ₹1 initiative makes it completely accessible for anyone starting from scratch.']"</blockquote>
+        </div>
+        <div class="review-foot">
+          <span class="initials" style="background:#c6e7ff;color:#001e2d">SM</span>
+          <div>
+            <div class="review-name">[Student Name Placeholder: S. Mukherjee]</div>
+            <div class="review-deg">[Degree Placeholder: B.Com &amp; Design Minor]</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section faq" id="faq">
+  <div class="faq-wrap">
+    <div class="faq-head">
+      <div class="eyebrow">Clarifications &amp; transparency</div>
+      <h2>Got Questions? Let's Clear the Confusion.</h2>
+      <p>Everything you need to know about our student guidance framework.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">Is this for beginners?
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><path d="M1 1.5l5 5 5-5"/></svg>
+        </button>
+        <div class="faq-a"><p>Yes. The program is designed for students who are just starting out on LinkedIn, as well as those who have a profile but are not sure how to use it well.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">Do I need work experience?
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><path d="M1 1.5l5 5 5-5"/></svg>
+        </button>
+        <div class="faq-a"><p>No. College projects, societies, certifications, and self-taught skills are all valid material for a strong profile.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">Why is the payment just ₹1?
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><path d="M1 1.5l5 5 5-5"/></svg>
+        </button>
+        <div class="faq-a"><p>The ₹1 registration is a subsidised entry point so that students can start without financial pressure. It keeps the first step accessible.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">Will I get an internship or a job?
+          <svg width="12" height="8" viewBox="0 0 24 8" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><path d="M1 1.5l5 5 5-5"/></svg>
+        </button>
+        <div class="faq-a"><p>Guidance can improve how you present yourself, but it does not guarantee employment, placements, or internships. Outcomes depend on many factors.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">What happens after I pay?
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><path d="M1 1.5l5 5 5-5"/></svg>
+        </button>
+        <div class="faq-a"><p>After payment, you receive the audit checklist, templates, and guide, and our team follows up with you on the next steps.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">Is my personal information safe?
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="#005eb5" stroke-width="2" stroke-linecap="round"><path d="M1 1.5l5 5 5-5"/></svg>
+        </button>
+        <div class="faq-a"><p>Your details are used only to provide your guidance. We do not sell your data or send spam.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final-cta">
+  <div class="final-glow"></div>
+  <div class="final-inner">
+    <span class="chip">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5c9efe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.3-2 4.5-2 4.5s3.2-.5 4.5-2c.7-.8.7-2.1 0-2.9-.7-.7-2-.7-2.5.4zM15 9l-4 4M9 5.5c.7-1.7 2.6-3 5-3 0 2.4-1.3 4.3-3 5M19 9c0-4-3-7-7-7"/></svg>
+      Take Your Next Career Step Today
+    </span>
+    <h2>Don't Wait for the Perfect Time.<br />Make This Your Starting Line.</h2>
+    <p class="sub1">Learn a little. Build a profile. Take your place.</p>
+    <p class="sub2">Your future is yours to write.</p>
+    <a class="btn btn-primary" href="https://payments.cashfree.com/forms/getaudit" target="_blank" rel="noopener">
+      Start My LinkedIn Journey
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <div class="final-perks">
+      <span>
+        <svg width="15" height="17" viewBox="0 0 24 24" fill="none" stroke="#7a93b3" stroke-width="2" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>
+        Instant Access
+      </span>
+      <span>
+        <svg width="13" height="17" viewBox="0 0 24 24" fill="none" stroke="#7a93b3" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+        100% Student-Friendly
+      </span>
+      <span>
+        <svg width="13" height="17" viewBox="0 0 24 24" fill="none" stroke="#7a93b3" stroke-width="2" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/></svg>
+        No Recurring Charges
+      </span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <span class="brand-mark" style="width:36px;height:36px;border-radius:8px">
+            <svg width="13" height="17" viewBox="0 0 15 19" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7" r="5"/><path d="M4.5 11.5 3 18l4.5-2 4.5 2-1.5-6.5"/></svg>
+          </span>
+          <span class="brand-name" style="font-size:20px">LinkedIn Made Simple</span>
+        </div>
+        <p>Empowering students to build confidence, showcase real skills, and take their next step on LinkedIn.</p>
+        <span class="chip" style="font-size:12px">
+          <svg width="14" height="12" viewBox="0 0 24 20" fill="none" stroke="#005eb5" stroke-width="2" stroke-linejoin="round"><path d="M12 2 1 7l11 5 9-4.1V14"/></svg>
+          Student-First Career Advisory
+        </span>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#top">Home</a></li>
+          <li><a href="#benefits">Benefits</a></li>
+          <li><a href="#achievements">Milestones &amp; Achievements</a></li>
+          <li><a href="#reviews">Student Reviews</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Student Trust &amp; Legal</h3>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Refund Policy</a></li>
+        </ul>
+        <div class="hotline-label">Student Support Hotline</div>
+        <a class="hotline-mail" href="mailto:support@linkedinmadesimple.in">
+          <svg width="15" height="12" viewBox="0 0 24 18" fill="none" stroke="#005eb5" stroke-width="2" stroke-linejoin="round"><rect x="2" y="2" width="20" height="14" rx="2"/><path d="M2 4l10 7 10-7"/></svg>
+          support@linkedinmadesimple.in
+        </a>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> LinkedIn Made Simple is an independent career guidance service for students. It is not affiliated with, endorsed by, or sponsored by LinkedIn Corporation. Career guidance and profile optimization services do not guarantee employment, job placements, or internships.
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 LinkedIn Made Simple. All rights reserved. Crafted with care for students.</span>
+      <span class="verified"><span class="dot"></span>Verified Student Program</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Config ----
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxj6gVC11IC_VHKSTRniEFj7NWM9_BZWiS8oZMlAvxRn4d4eu0a75-MofjqRqk35c7m/exec";
+  const PAYMENT_URL = "https://payments.cashfree.com/forms/getaudit";
+
+  // ---- FAQ accordion ----
+  document.querySelectorAll(".faq-item").forEach(function (item) {
+    const btn = item.querySelector(".faq-q");
+    btn.addEventListener("click", function () {
+      const isOpen = item.classList.toggle("open");
+      btn.setAttribute("aria-expanded", String(isOpen));
+    });
+  });
+
+  // ---- Form submit (GET to Apps Script; works from file://) ----
+  const form = document.getElementById("intakeForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const submitText = document.getElementById("submitText");
+  const formError = document.getElementById("formError");
+  const successPanel = document.getElementById("successPanel");
+
+  function setLoading(isLoading) {
+    submitBtn.disabled = isLoading;
+    submitText.textContent = isLoading ? "Saving your details..." : "Continue to Payment (₹1)";
+  }
+
+  function showSuccess() {
+    form.hidden = true;
+    formError.hidden = true;
+    successPanel.classList.add("show");
+    setLoading(false);
+  }
+
+  function showError() {
+    setLoading(false);
+    formError.textContent = "Something went wrong. Please check your connection and try again.";
+    formError.hidden = false;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+
+    if (!name || !email || !phone) {
+      formError.textContent = "Please fill in your name, email, and phone number.";
+      formError.hidden = false;
+      return;
+    }
+    formError.hidden = true;
+    setLoading(true);
+
+    const url = SCRIPT_URL + "?" + new URLSearchParams({ name: name, email: email, phone: phone });
+
+    fetch(url, { method: "GET", mode: "no-cors" })
+      .then(() => showSuccess())
+      .catch(() => showError());
+  });
+</script>
+</body>
+</html>
